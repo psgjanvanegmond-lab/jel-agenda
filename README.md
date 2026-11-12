@@ -2,7 +2,8 @@
 
 Toont de agenda van het Jan van Egmond Lyceum op de website, rechtstreeks uit de Outlook-agenda **"JEL agenda website"**.
 
-- Een automatische taak (GitHub Actions) haalt **elk half uur** de agenda op uit Outlook.
+- Een automatische taak (GitHub Actions) haalt de agenda op uit Outlook: **automatisch om 12:00 en 18:00**,
+  en **handmatig** wanneer je wilt (zie hieronder).
   Microsoft blokkeert verkeer van GitHub naar Outlook; daarom loopt het ophalen via een klein
   tussenstation op **Render** (map `proxy/`). Dat geeft alleen een opgeschoonde agenda door
   (zonder privé- en geannuleerde afspraken en zonder deelnemers); de Outlook-link blijft geheim op Render.
@@ -21,6 +22,13 @@ Toont de agenda van het Jan van Egmond Lyceum op de website, rechtstreeks uit de
 | Niet op de website | Afspraak op **Privé** zetten | wordt overgeslagen |
 
 Locatie en notitie uit Outlook worden ook getoond. Het icoon wordt gekozen op basis van de titel. Zelf kiezen kan met een Outlook-categorie met een van deze namen: `vakantie`, `vrij`, `toets`, `uitslag`, `gesprek`, `groep8`, `activiteit`, `rooster`, `agenda`.
+
+## Handmatig bijwerken (na een wijziging in Outlook)
+
+1. Ga naar <https://github.com/psgjanvanegmond-lab/jel-agenda/actions/workflows/agenda.yml>
+2. Klik rechts op **Run workflow** en daarna op de groene knop **Run workflow**.
+3. Na 1 à 2 minuten staat er een groen vinkje. Binnen ongeveer 10 minuten staat de wijziging op de website
+   (eventueel de pagina verversen met Cmd+Shift+R / Ctrl+F5).
 
 ## Eenmalig instellen
 

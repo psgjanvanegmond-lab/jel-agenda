@@ -1,9 +1,14 @@
 name: Agenda bijwerken
 
-# Haalt elk half uur de Outlook-agenda op en zet die op GitHub Pages.
+# Haalt de Outlook-agenda op en zet die op GitHub Pages:
+# - automatisch om 12:00 en 18:00 Nederlandse tijd;
+# - handmatig met de knop "Run workflow" (Actions → Agenda bijwerken).
+#
+# GitHub rekent in UTC-tijd. Daarom staan er vier tijden ingepland (voor winter- en zomertijd);
+# de eerste taak hieronder laat alleen de runs om 12 en 18 uur Nederlandse tijd doorgaan.
 on:
   schedule:
-    - cron: "7,37 * * * *"
+    - cron: "5 10,11,16,17 * * *"
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -18,7 +23,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  tijdcontrole:
+    runs-on: ubuntu-latest
+    outputs:
+      doorgaan: ${{ steps.check.outputs.doorgaan }}
+    steps:
+      - id: check
+        run: |
+          uur=$(TZ=Europe/Amsterdam date +%H)
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "$uur" = "12" ] || [ "$uur" = "18" ]; then
+            echo "doorgaan=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Het is nu $uur uur in Nederland; deze geplande run wordt overgeslagen."
+            echo "doorgaan=false" >> "$GITHUB_OUTPUT"
+          fi
+
   bijwerken:
+    needs: tijdcontrole
+    if: needs.tijdcontrole.outputs.doorgaan == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
