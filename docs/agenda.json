@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-12T20:47:20+01:00",
+    "updated": "2026-11-12T22:06:16+01:00",
     "items": [
         {
             "start": "2026-10-10",
@@ -72,6 +72,16 @@
             "type": "gesprek"
         },
         {
+            "start": "2026-11-26",
+            "end": "2026-11-26",
+            "start_time": "19:00",
+            "end_time": "21:30",
+            "title": "Studie en beroepenavond",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
             "start": "2026-11-30",
             "end": "2026-12-03",
             "start_time": "17:00",
@@ -126,7 +136,7 @@
             "end": "2026-12-15",
             "start_time": "19:00",
             "end_time": "23:00",
-            "title": "Gala bovenbouw",
+            "title": "Gala bovenbouw in P3",
             "location": "",
             "description": "",
             "type": "activiteit"
