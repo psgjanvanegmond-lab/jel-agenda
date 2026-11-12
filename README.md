@@ -7,7 +7,7 @@ Toont de agenda van het Jan van Egmond Lyceum op de website, rechtstreeks uit de
   tussenstation op **Render** (map `proxy/`). Dat geeft alleen een opgeschoonde agenda door
   (zonder privé- en geannuleerde afspraken en zonder deelnemers); de Outlook-link blijft geheim op Render.
 - Het resultaat (`docs/agenda.json`) wordt gepubliceerd op GitHub Pages.
-- De website laat de agenda zien met een klein stukje code: **2 maanden tegelijk met pijltjes, tijden, datumbereik en icoontjes**.
+- De website laat de agenda zien met een klein stukje code: **1 maand tegelijk met pijltjes, tijden, datumbereik en icoontjes**.
 - Werkt GitHub of Outlook een keer niet, dan blijft de laatst bekende agenda staan.
 
 ## Agenda bijhouden (in Outlook)
@@ -44,14 +44,14 @@ Gaat er iets mis, dan stuurt GitHub een e-mail en staat de fout bij *Actions*.
 Voeg op de pagina een blok **Aangepaste HTML** toe met:
 
 ```html
-<div data-jel-agenda-embed data-maanden="2">Agenda laden…</div>
+<div data-jel-agenda-embed data-maanden="1">Agenda laden…</div>
 <link rel="stylesheet" href="https://psgjanvanegmond-lab.github.io/jel-agenda/agenda.css">
 <script src="https://psgjanvanegmond-lab.github.io/jel-agenda/agenda.js" defer></script>
 ```
 
 Opties op de eerste regel:
 
-- `data-maanden="3"`: 3 maanden tegelijk (`0` = alles onder elkaar)
+- `data-maanden="2"`: 2 maanden tegelijk (`0` = alles onder elkaar)
 - `data-aantal="5"`: alleen de eerstvolgende 5, zonder pijltjes (bijv. voor de homepage)
 - `data-verleden="ja"`: ook afgelopen activiteiten
 

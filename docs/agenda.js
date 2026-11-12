@@ -2,12 +2,12 @@
  * JEL Agenda — toont de agenda (agenda.json) op een webpagina.
  *
  * Insluiten:
- *   <div data-jel-agenda-embed data-maanden="2">Agenda laden…</div>
+ *   <div data-jel-agenda-embed data-maanden="1">Agenda laden…</div>
  *   <link rel="stylesheet" href="https://psgjanvanegmond-lab.github.io/jel-agenda/agenda.css">
  *   <script src="https://psgjanvanegmond-lab.github.io/jel-agenda/agenda.js" defer></script>
  *
  * Opties (data-attributen op de div):
- *   data-maanden="2"    aantal maanden tegelijk, met pijltjes (0 = alles onder elkaar)
+ *   data-maanden="1"    aantal maanden tegelijk, met pijltjes (0 = alles onder elkaar)
  *   data-aantal="5"     alleen de eerstvolgende X activiteiten, zonder pijltjes
  *   data-verleden="ja"  ook afgelopen activiteiten tonen
  */
@@ -103,7 +103,7 @@
 
 	function render(el, items) {
 		var perView = parseInt(el.getAttribute('data-maanden'), 10);
-		if (isNaN(perView)) perView = 2;
+		if (isNaN(perView)) perView = 1;
 		var limit = parseInt(el.getAttribute('data-aantal'), 10) || 0;
 		var past = /^(ja|1|true)$/i.test(el.getAttribute('data-verleden') || '');
 		if (limit) perView = 0;
