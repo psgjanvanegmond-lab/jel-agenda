@@ -89,9 +89,14 @@ jobs:
 
       - name: Bestanden klaarzetten
         if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs
+
+      # GitHub heeft soms een paar seconden nodig voordat het geüploade bestand vindbaar is.
+      - name: Even wachten
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        run: sleep 15
 
       - name: Publiceren op GitHub Pages
         id: deploy
