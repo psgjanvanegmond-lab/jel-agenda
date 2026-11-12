@@ -1,0 +1,20 @@
+# Render Blueprint: het tussenstation dat de Outlook-agenda ophaalt voor de GitHub-taak.
+# Aanmaken: Render → New → Blueprint → kies deze opslagplaats.
+services:
+  - type: web
+    name: jel-agenda-proxy
+    runtime: python
+    plan: free
+    region: frankfurt
+    rootDir: proxy
+    buildCommand: echo "geen build nodig"
+    startCommand: python server.py
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ICS_URL
+        sync: false
+      - key: TOKEN
+        generateValue: true   # Render maakt zelf een willekeurige sleutel
+      - key: PYTHON_VERSION
+        value: 3.12.7

@@ -27,17 +27,21 @@ jobs:
       - name: Code ophalen
         uses: actions/checkout@v5
 
-      - name: Agenda ophalen uit Outlook
+      # Microsoft blokkeert verkeer van GitHub naar Outlook. Daarom wordt de agenda opgehaald
+      # via het tussenstation op Render (map proxy/). Dat kan na een rustige periode tot
+      # een minuut nodig hebben om wakker te worden; vandaar de ruime wachttijd.
+      - name: Agenda ophalen (via Render)
         env:
-          JEL_ICS_URL: ${{ secrets.JEL_ICS_URL }}
+          PROXY_URL: ${{ secrets.JEL_PROXY_URL }}
+          PROXY_TOKEN: ${{ secrets.JEL_PROXY_TOKEN }}
         run: |
-          if [ -z "$JEL_ICS_URL" ]; then
-            echo "::error::Het secret JEL_ICS_URL ontbreekt (Settings → Secrets and variables → Actions)."
+          if [ -z "$PROXY_URL" ] || [ -z "$PROXY_TOKEN" ]; then
+            echo "::error::De secrets JEL_PROXY_URL en/of JEL_PROXY_TOKEN ontbreken (Settings → Secrets and variables → Actions)."
             exit 1
           fi
-          # --ipv4: via IPv6 lukt de verbinding met Outlook vanaf GitHub soms niet.
-          curl -fsSL --ipv4 --connect-timeout 20 --max-time 90 --retry 3 --retry-delay 15 --retry-all-errors \
-            -A "Mozilla/5.0 (JEL agenda)" -H "Accept: text/calendar" "$JEL_ICS_URL" -o "$RUNNER_TEMP/agenda.ics"
+          curl -fsS -o /dev/null --max-time 120 --retry 2 --retry-delay 20 --retry-all-errors "${PROXY_URL%/}/health" || true
+          curl -fsSL --connect-timeout 30 --max-time 150 --retry 3 --retry-delay 20 --retry-all-errors \
+            -H "Authorization: Bearer $PROXY_TOKEN" "${PROXY_URL%/}/agenda.ics" -o "$RUNNER_TEMP/agenda.ics"
 
       - name: agenda.json maken
         run: php build/build.php "$RUNNER_TEMP/agenda.ics" docs/agenda.json
