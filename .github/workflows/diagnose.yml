@@ -2,10 +2,17 @@ name: Diagnose verbinding (tijdelijk)
 on: workflow_dispatch
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-22.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: |
-          for h in outlook.office365.com outlook.office.com outlook.live.com www.microsoft.com github.com; do
-            echo "== $h"; getent ahosts $h | head -3
-            curl -s -o /dev/null -w "ipv4: %{http_code} in %{time_total}s\n" --ipv4 --connect-timeout 10 https://$h/ || echo "ipv4: MISLUKT ($?)"
+      - shell: bash
+        env:
+          JEL_ICS_URL: ${{ secrets.JEL_ICS_URL }}
+        run: |
+          for h in outlook.office365.com outlook.office.com; do
+            curl -s -o /dev/null -w "RESULT ${{ matrix.os }} $h: %{http_code} in %{time_total}s\n" --connect-timeout 10 https://$h/ || echo "RESULT ${{ matrix.os }} $h: MISLUKT ($?)"
           done
+          curl -s -o /dev/null -w "RESULT ${{ matrix.os }} ICS-link: %{http_code} in %{time_total}s\n" --connect-timeout 15 "$JEL_ICS_URL" || echo "RESULT ${{ matrix.os }} ICS-link: MISLUKT ($?)"
