@@ -1,0 +1,76 @@
+name: Agenda bijwerken
+
+# Haalt elk half uur de Outlook-agenda op en zet die op GitHub Pages.
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: agenda
+  cancel-in-progress: false
+
+jobs:
+  bijwerken:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v4
+
+      - name: Agenda ophalen uit Outlook
+        env:
+          JEL_ICS_URL: ${{ secrets.JEL_ICS_URL }}
+        run: |
+          if [ -z "$JEL_ICS_URL" ]; then
+            echo "::error::Het secret JEL_ICS_URL ontbreekt (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          curl -fsSL --retry 3 --retry-delay 10 --max-time 60 -H "Accept: text/calendar" "$JEL_ICS_URL" -o "$RUNNER_TEMP/agenda.ics"
+
+      - name: agenda.json maken
+        run: php build/build.php "$RUNNER_TEMP/agenda.ics" docs/agenda.json
+
+      - name: Opslaan als de agenda veranderd is
+        id: save
+        run: |
+          git config user.name "agenda-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # GitHub zet automatische taken uit na 60 dagen zonder wijzigingen; daarom af en toe een teken van leven.
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
+            date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/.laatst-gecontroleerd
+          fi
+          git add docs
+          if git diff --cached --quiet; then
+            echo "Geen wijzigingen."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Agenda bijgewerkt"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Pages voorbereiden
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        uses: actions/configure-pages@v5
+
+      - name: Bestanden klaarzetten
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Publiceren op GitHub Pages
+        id: deploy
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,505 @@
+{
+    "updated": "2026-11-12T20:47:20+01:00",
+    "items": [
+        {
+            "start": "2026-10-10",
+            "end": "2026-10-18",
+            "start_time": "",
+            "end_time": "",
+            "title": "Herfstvakantie",
+            "location": "",
+            "description": "",
+            "type": "vakantie"
+        },
+        {
+            "start": "2026-10-30",
+            "end": "2026-10-30",
+            "start_time": "",
+            "end_time": "",
+            "title": "Halloween",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2026-11-10",
+            "end": "2026-11-10",
+            "start_time": "",
+            "end_time": "",
+            "title": "Studiedag: leerlingen vrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2026-11-11",
+            "end": "2026-11-19",
+            "start_time": "",
+            "end_time": "",
+            "title": "SE1-week / VT-toetsweek",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2026-11-23",
+            "end": "2026-11-26",
+            "start_time": "17:00",
+            "end_time": "20:00",
+            "title": "POP-gesprekken onderbouw",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
+            "start": "2026-11-25",
+            "end": "2026-11-25",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 1",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2026-11-26",
+            "end": "2026-11-26",
+            "start_time": "",
+            "end_time": "",
+            "title": "Studie- en beroepenavond",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
+            "start": "2026-11-30",
+            "end": "2026-12-03",
+            "start_time": "17:00",
+            "end_time": "20:00",
+            "title": "POP-gesprekken bovenbouw (incl. examenklassen)",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
+            "start": "2026-12-07",
+            "end": "2026-12-07",
+            "start_time": "",
+            "end_time": "",
+            "title": "Deadline profielkeuze klas 3",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2026-12-07",
+            "end": "2026-12-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "SE1 afname 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2026-12-10",
+            "end": "2026-12-10",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 2",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2026-12-15",
+            "end": "2026-12-15",
+            "start_time": "12:30",
+            "end_time": "15:00",
+            "title": "Eindejaarslunch onderbouw",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2026-12-15",
+            "end": "2026-12-15",
+            "start_time": "19:00",
+            "end_time": "23:00",
+            "title": "Gala bovenbouw",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2026-12-16",
+            "end": "2026-12-17",
+            "start_time": "",
+            "end_time": "",
+            "title": "Leerlingbesprekingen (leerlingen roostervrij)",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2026-12-18",
+            "end": "2026-12-18",
+            "start_time": "",
+            "end_time": "",
+            "title": "Roostervrije dag: leerlingen en medewerkers vrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2026-12-19",
+            "end": "2027-01-03",
+            "start_time": "",
+            "end_time": "",
+            "title": "Kerstvakantie",
+            "location": "",
+            "description": "",
+            "type": "vakantie"
+        },
+        {
+            "start": "2027-01-19",
+            "end": "2027-01-19",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 3",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-01-26",
+            "end": "2027-01-26",
+            "start_time": "",
+            "end_time": "",
+            "title": "30-minutenrooster",
+            "location": "",
+            "description": "",
+            "type": "rooster"
+        },
+        {
+            "start": "2027-01-26",
+            "end": "2027-01-27",
+            "start_time": "19:00",
+            "end_time": "21:00",
+            "title": "Open avond",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-01-27",
+            "end": "2027-01-27",
+            "start_time": "",
+            "end_time": "",
+            "title": "Studiedag: leerlingen vrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2027-02-03",
+            "end": "2027-02-03",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 4",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-02-04",
+            "end": "2027-02-05",
+            "start_time": "",
+            "end_time": "",
+            "title": "SE2-mondelingen examenklassen",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-02-08",
+            "end": "2027-02-16",
+            "start_time": "",
+            "end_time": "",
+            "title": "SE2-week / VT-toetsweek",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-02-20",
+            "end": "2027-02-28",
+            "start_time": "",
+            "end_time": "",
+            "title": "Voorjaarsvakantie",
+            "location": "",
+            "description": "",
+            "type": "vakantie"
+        },
+        {
+            "start": "2027-03-01",
+            "end": "2027-03-05",
+            "start_time": "",
+            "end_time": "",
+            "title": "Activiteitenweek + reisweek havo 4 / vwo 5",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2027-03-01",
+            "end": "2027-03-04",
+            "start_time": "",
+            "end_time": "",
+            "title": "GGD-onderzoek klas 1 en 3",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2027-03-02",
+            "end": "2027-03-02",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 5",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-03-03",
+            "end": "2027-03-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "POP-gesprekken examenklassen (avond)",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
+            "start": "2027-03-10",
+            "end": "2027-03-12",
+            "start_time": "",
+            "end_time": "",
+            "title": "SE2 afname 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-03-11",
+            "end": "2027-03-11",
+            "start_time": "14:45",
+            "end_time": "16:15",
+            "title": "Meeloopmiddag 6",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-03-25",
+            "end": "2027-03-25",
+            "start_time": "",
+            "end_time": "",
+            "title": "Schoolfeest onderbouw (avond)",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2027-03-26",
+            "end": "2027-03-26",
+            "start_time": "",
+            "end_time": "",
+            "title": "Goede Vrijdag: lesvrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2027-03-29",
+            "end": "2027-03-29",
+            "start_time": "",
+            "end_time": "",
+            "title": "Tweede paasdag: lesvrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2027-04-05",
+            "end": "2027-04-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "Ontwikkelweek: 30-minutenrooster (leerlingbesprekingen)",
+            "location": "",
+            "description": "",
+            "type": "rooster"
+        },
+        {
+            "start": "2027-04-12",
+            "end": "2027-04-16",
+            "start_time": "19:00",
+            "end_time": "21:30",
+            "title": "POP-gesprekken onder- en bovenbouw (m.u.v. examenklassen)",
+            "location": "",
+            "description": "",
+            "type": "gesprek"
+        },
+        {
+            "start": "2027-04-24",
+            "end": "2027-05-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "Meivakantie (incl. Koningsdag en Hemelvaart)",
+            "location": "",
+            "description": "",
+            "type": "vakantie"
+        },
+        {
+            "start": "2027-05-14",
+            "end": "2027-06-01",
+            "start_time": "",
+            "end_time": "",
+            "title": "Centraal examen tijdvak 1",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-05-17",
+            "end": "2027-05-17",
+            "start_time": "",
+            "end_time": "",
+            "title": "Tweede pinksterdag: lesvrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2027-06-14",
+            "end": "2027-06-18",
+            "start_time": "",
+            "end_time": "",
+            "title": "Ontwikkelweek: 30-minutenrooster",
+            "location": "",
+            "description": "",
+            "type": "rooster"
+        },
+        {
+            "start": "2027-06-14",
+            "end": "2027-06-18",
+            "start_time": "",
+            "end_time": "",
+            "title": "Surfreis havo 4 / vwo 4",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2027-06-16",
+            "end": "2027-06-16",
+            "start_time": "",
+            "end_time": "",
+            "title": "Uitslag CE 1e tijdvak",
+            "location": "",
+            "description": "",
+            "type": "uitslag"
+        },
+        {
+            "start": "2027-06-21",
+            "end": "2027-06-21",
+            "start_time": "13:30",
+            "end_time": "",
+            "title": "Kennismakingsmiddag nieuwe brugklassen",
+            "location": "",
+            "description": "",
+            "type": "groep8"
+        },
+        {
+            "start": "2027-06-22",
+            "end": "2027-06-29",
+            "start_time": "",
+            "end_time": "",
+            "title": "Centraal examen tijdvak 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-07-06",
+            "end": "2027-07-06",
+            "start_time": "",
+            "end_time": "",
+            "title": "Mentoractiviteit",
+            "location": "",
+            "description": "",
+            "type": "activiteit"
+        },
+        {
+            "start": "2027-07-06",
+            "end": "2027-07-06",
+            "start_time": "",
+            "end_time": "",
+            "title": "Uitslag CE 2e tijdvak",
+            "location": "",
+            "description": "",
+            "type": "uitslag"
+        },
+        {
+            "start": "2027-07-07",
+            "end": "2027-07-07",
+            "start_time": "",
+            "end_time": "",
+            "title": "Boeken inleveren en rapport ophalen",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2027-07-07",
+            "end": "2027-07-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "Ontwikkeldagen: lesvrij",
+            "location": "",
+            "description": "",
+            "type": "vrij"
+        },
+        {
+            "start": "2027-07-07",
+            "end": "2027-07-07",
+            "start_time": "19:00",
+            "end_time": "22:00",
+            "title": "Diplomering vwo",
+            "location": "",
+            "description": "",
+            "type": "uitslag"
+        },
+        {
+            "start": "2027-07-08",
+            "end": "2027-07-08",
+            "start_time": "19:00",
+            "end_time": "22:00",
+            "title": "Diplomering havo",
+            "location": "",
+            "description": "",
+            "type": "uitslag"
+        },
+        {
+            "start": "2027-07-10",
+            "end": "2027-08-22",
+            "start_time": "",
+            "end_time": "",
+            "title": "Zomervakantie",
+            "location": "",
+            "description": "",
+            "type": "vakantie"
+        }
+    ]
+}

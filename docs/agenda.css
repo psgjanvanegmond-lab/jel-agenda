@@ -1,0 +1,89 @@
+/* JEL Agenda — alle regels zijn beperkt tot .jel-agenda zodat het thema niet wordt beïnvloed. */
+.jel-agenda {
+	--jel-accent: #7a3572;
+	--jel-badge: #a3b899;
+	--jel-text: #1a1a1a;
+	--jel-muted: #5f5f5f;
+	--jel-line: #e6e3df;
+	--jel-soft: #f3f1ee;
+	color: var(--jel-text);
+	max-width: 860px;
+	margin: 0 auto;
+}
+.jel-agenda *, .jel-agenda *::before, .jel-agenda *::after { box-sizing: border-box; }
+.jel-agenda [hidden] { display: none !important; }
+
+/* Maandnavigatie */
+.jel-agenda__nav {
+	display: flex; align-items: center; justify-content: space-between; gap: 12px;
+	background: var(--jel-soft); border-radius: 14px; padding: 8px; margin: 0 0 20px;
+	scroll-margin-top: 120px;
+}
+.jel-agenda__nav-label { font-weight: 700; font-size: 17px; text-align: center; }
+.jel-agenda__arrow {
+	appearance: none; border: 0; width: 40px; height: 40px; border-radius: 50%; flex: 0 0 40px;
+	display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+	background: #fff; color: var(--jel-text); box-shadow: 0 1px 2px rgba(0,0,0,.08);
+	transition: background .15s, color .15s;
+}
+.jel-agenda__arrow:hover:not(:disabled) { background: var(--jel-accent); color: #fff; }
+.jel-agenda__arrow:disabled { opacity: .35; cursor: default; box-shadow: none; }
+.jel-agenda__arrow:focus-visible { outline: 3px solid var(--jel-accent); outline-offset: 2px; }
+.jel-agenda__arrow svg { width: 20px; height: 20px; }
+
+/* Maanden en activiteiten */
+.jel-agenda__month { margin: 0 0 28px; }
+.jel-agenda__month-title { font-size: 20px; line-height: 1.2; margin: 0 0 4px; padding: 6px 4px; font-weight: 700; color: var(--jel-accent); }
+.jel-agenda__list { list-style: none; margin: 0; padding: 0; }
+.jel-agenda__item {
+	display: flex; align-items: flex-start; gap: 16px; padding: 14px 4px;
+	border-bottom: 1px solid var(--jel-line); margin: 0;
+}
+.jel-agenda__item:last-child { border-bottom: 0; }
+
+.jel-agenda__date {
+	flex: 0 0 60px; height: 66px; border-radius: 14px; background: var(--jel-badge);
+	display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1;
+}
+.jel-agenda__dow { font-size: 13px; text-transform: capitalize; }
+.jel-agenda__day { font-size: 22px; font-weight: 700; margin: 3px 0 2px; }
+.jel-agenda__mon { font-size: 12px; }
+
+.jel-agenda__icon {
+	flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; margin-top: 12px;
+	display: flex; align-items: center; justify-content: center;
+	background: var(--jel-type-bg, #eceae6); color: var(--jel-type-fg, #444);
+}
+.jel-agenda__icon svg { width: 22px; height: 22px; }
+
+.jel-agenda__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 6px; }
+.jel-agenda__title { font-size: 18px; line-height: 1.3; font-weight: 700; overflow-wrap: anywhere; }
+.jel-agenda__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 15px; color: var(--jel-muted); }
+.jel-agenda__info { display: inline-flex; align-items: center; gap: 5px; }
+.jel-agenda__info svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.jel-agenda__range { font-weight: 600; color: var(--jel-text); }
+.jel-agenda__desc { font-size: 15px; color: var(--jel-muted); }
+.jel-agenda__empty { color: var(--jel-muted); }
+.jel-agenda .jel-agenda__sr {
+	position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Kleuren per soort activiteit */
+.jel-agenda__item--vakantie   { --jel-type-bg: #fdf0c9; --jel-type-fg: #8a5a00; }
+.jel-agenda__item--vrij       { --jel-type-bg: #e2f1e4; --jel-type-fg: #2f6b3a; }
+.jel-agenda__item--toets      { --jel-type-bg: #fde4e1; --jel-type-fg: #a1352b; }
+.jel-agenda__item--uitslag    { --jel-type-bg: #e5e9fb; --jel-type-fg: #34479a; }
+.jel-agenda__item--gesprek    { --jel-type-bg: #f1e3ef; --jel-type-fg: #7a3572; }
+.jel-agenda__item--groep8     { --jel-type-bg: #ffe8d6; --jel-type-fg: #a14d12; }
+.jel-agenda__item--activiteit { --jel-type-bg: #e0f2f4; --jel-type-fg: #1f6b74; }
+.jel-agenda__item--rooster    { --jel-type-bg: #ecebe8; --jel-type-fg: #555; }
+
+@media (max-width: 600px) {
+	.jel-agenda__item { gap: 12px; }
+	.jel-agenda__date { flex-basis: 52px; height: 60px; }
+	.jel-agenda__icon { flex-basis: 34px; width: 34px; height: 34px; margin-top: 13px; }
+	.jel-agenda__icon svg { width: 19px; height: 19px; }
+	.jel-agenda__title { font-size: 16px; }
+	.jel-agenda__meta { font-size: 14px; }
+	.jel-agenda__nav-label { font-size: 15px; }
+}
