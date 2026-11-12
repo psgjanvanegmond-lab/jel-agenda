@@ -32,16 +32,11 @@ jobs:
       # een minuut nodig hebben om wakker te worden; vandaar de ruime wachttijd.
       - name: Agenda ophalen (via Render)
         env:
-          PROXY_URL: ${{ secrets.JEL_PROXY_URL }}
-          PROXY_TOKEN: ${{ secrets.JEL_PROXY_TOKEN }}
+          PROXY_URL: ${{ vars.JEL_PROXY_URL || 'https://jel-agenda-proxy.onrender.com' }}
         run: |
-          if [ -z "$PROXY_URL" ] || [ -z "$PROXY_TOKEN" ]; then
-            echo "::error::De secrets JEL_PROXY_URL en/of JEL_PROXY_TOKEN ontbreken (Settings → Secrets and variables → Actions)."
-            exit 1
-          fi
           curl -fsS -o /dev/null --max-time 120 --retry 2 --retry-delay 20 --retry-all-errors "${PROXY_URL%/}/health" || true
           curl -fsSL --connect-timeout 30 --max-time 150 --retry 3 --retry-delay 20 --retry-all-errors \
-            -H "Authorization: Bearer $PROXY_TOKEN" "${PROXY_URL%/}/agenda.ics" -o "$RUNNER_TEMP/agenda.ics"
+            "${PROXY_URL%/}/agenda.ics" -o "$RUNNER_TEMP/agenda.ics"
 
       - name: agenda.json maken
         run: php build/build.php "$RUNNER_TEMP/agenda.ics" docs/agenda.json

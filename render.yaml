@@ -14,7 +14,5 @@ services:
     envVars:
       - key: ICS_URL
         sync: false
-      - key: TOKEN
-        generateValue: true   # Render maakt zelf een willekeurige sleutel
       - key: PYTHON_VERSION
         value: 3.12.7

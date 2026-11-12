@@ -4,7 +4,8 @@ Toont de agenda van het Jan van Egmond Lyceum op de website, rechtstreeks uit de
 
 - Een automatische taak (GitHub Actions) haalt **elk half uur** de agenda op uit Outlook.
   Microsoft blokkeert verkeer van GitHub naar Outlook; daarom loopt het ophalen via een klein
-  tussenstation op **Render** (map `proxy/`), dat met een geheime sleutel is afgeschermd.
+  tussenstation op **Render** (map `proxy/`). Dat geeft alleen een opgeschoonde agenda door
+  (zonder privé- en geannuleerde afspraken en zonder deelnemers); de Outlook-link blijft geheim op Render.
 - Het resultaat (`docs/agenda.json`) wordt gepubliceerd op GitHub Pages.
 - De website laat de agenda zien met een klein stukje code: **2 maanden tegelijk met pijltjes, tijden, datumbereik en icoontjes**.
 - Werkt GitHub of Outlook een keer niet, dan blijft de laatst bekende agenda staan.
@@ -26,17 +27,15 @@ Locatie en notitie uit Outlook worden ook getoond. Het icoon wordt gekozen op ba
 **Render (tussenstation)**
 
 1. Render → *New* → *Blueprint* → kies de opslagplaats `jel-agenda`.
-2. Vul bij `ICS_URL` de ICS-link uit Outlook in. `TOKEN` (de geheime sleutel) maakt Render zelf.
-3. Na het aanmaken: noteer het adres, bijv. `https://jel-agenda-proxy.onrender.com`, en kopieer
-   de waarde van `TOKEN` (service → *Environment*).
+2. Vul bij `ICS_URL` de ICS-link uit Outlook in en klik *Apply*.
+3. Krijgt de service een ander adres dan `https://jel-agenda-proxy.onrender.com`, zet dat adres dan
+   op GitHub als *variable* `JEL_PROXY_URL` (*Settings → Secrets and variables → Actions → Variables*).
 
-**GitHub** (*Settings → Secrets and variables → Actions*):
+**GitHub**
 
-1. `JEL_PROXY_URL` = het Render-adres
-   `JEL_PROXY_TOKEN` = dezelfde sleutel als `TOKEN` op Render
-2. **Pages aanzetten:** *Settings → Pages → Build and deployment → Source:* **GitHub Actions**
-3. **Eerste keer draaien:** *Actions → Agenda bijwerken → Run workflow*
-4. Controleer: <https://psgjanvanegmond-lab.github.io/jel-agenda/>
+1. **Pages aanzetten:** *Settings → Pages → Build and deployment → Source:* **GitHub Actions**
+2. **Eerste keer draaien:** *Actions → Agenda bijwerken → Run workflow*
+3. Controleer: <https://psgjanvanegmond-lab.github.io/jel-agenda/>
 
 Gaat er iets mis, dan stuurt GitHub een e-mail en staat de fout bij *Actions*.
 

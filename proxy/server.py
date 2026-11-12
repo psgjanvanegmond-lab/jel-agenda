@@ -2,21 +2,22 @@
 JEL Agenda - tussenstation op Render.
 
 GitHub kan Outlook niet bereiken (Microsoft blokkeert dat verkeer). Deze kleine
-webservice haalt de Outlook-agenda (ICS) op en geeft die door aan de GitHub-taak.
+webservice haalt de Outlook-agenda (ICS) op en geeft een opgeschoonde versie door:
+privé-, vertrouwelijke en geannuleerde afspraken worden eruit gehaald. Wat overblijft
+is precies wat ook openbaar op de website komt; de Outlook-link zelf blijft geheim.
 
-Instellingen (Environment Variables op Render):
+Instelling (Environment Variable op Render):
   ICS_URL    de ICS-link uit Outlook
-  TOKEN      geheime sleutel; alleen wie die meestuurt krijgt de agenda
 
 Adressen:
-  GET /             -> "ok" (controle of de service draait)
-  GET /agenda.ics   -> de agenda; vereist de kop  Authorization: Bearer <TOKEN>
+  GET /health       -> "ok" (controle of de service draait)
+  GET /agenda.ics   -> de opgeschoonde agenda
 
 Alleen Python-standaardbibliotheek, geen extra pakketten.
 """
 
-import hmac
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -24,11 +25,36 @@ import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ICS_URL = os.environ.get("ICS_URL", "").strip().replace("webcal://", "https://", 1)
-TOKEN = os.environ.get("TOKEN", "").strip()
 PORT = int(os.environ.get("PORT", "10000"))
 CACHE_SECONDS = 300
 
 _cache = {"time": 0.0, "body": b""}
+
+# Velden die nooit worden doorgegeven (deelnemers, organisator e.d.).
+DROP_PROPS = ("ATTENDEE", "ORGANIZER", "X-MS-OLK-", "X-MICROSOFT-CDO-OWNERAPPTID")
+
+
+def clean_ics(text):
+    """Verwijdert privé/vertrouwelijke/geannuleerde afspraken en persoonsgegevens."""
+    # Doorlopende regels samenvoegen, zodat elke eigenschap op één regel staat.
+    text = re.sub(r"\r?\n[ \t]", "", text.replace("\r\n", "\n"))
+    out, event = [], None
+    for line in text.split("\n"):
+        upper = line.upper()
+        if upper == "BEGIN:VEVENT":
+            event = [line]
+            continue
+        if event is not None:
+            event.append(line)
+            if upper == "END:VEVENT":
+                block = "\n".join(event).upper()
+                skip = re.search(r"\n(CLASS:(PRIVATE|CONFIDENTIAL)|STATUS:CANCELLED)\s*\n", block)
+                if not skip:
+                    out.extend(l for l in event if not l.upper().startswith(DROP_PROPS))
+                event = None
+            continue
+        out.append(line)
+    return "\r\n".join(out).strip() + "\r\n"
 
 
 def fetch_ics():
@@ -42,13 +68,15 @@ def fetch_ics():
     )
     try:
         with urllib.request.urlopen(req, timeout=40) as resp:
-            body = resp.read(10 * 1024 * 1024)
+            raw = resp.read(10 * 1024 * 1024)
     except urllib.error.HTTPError as e:
         return 502, f"Outlook gaf foutcode {e.code}.".encode()
     except Exception as e:  # netwerkfout, time-out
         return 502, f"Outlook niet bereikbaar ({type(e).__name__}).".encode()
-    if b"BEGIN:VCALENDAR" not in body[:2000].upper():
+    text = raw.decode("utf-8", errors="replace")
+    if "BEGIN:VCALENDAR" not in text[:2000].upper():
         return 502, b"Outlook gaf geen agenda terug. Is het de ICS-link?"
+    body = clean_ics(text).encode("utf-8")
     _cache.update(time=now, body=body)
     return 200, body
 
@@ -62,6 +90,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Robots-Tag", "noindex")
         self.end_headers()
         if self.command != "HEAD":
             self.wfile.write(body)
@@ -75,19 +104,15 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, b"ok")
         if path != "/agenda.ics":
             return self._send(404, b"Niet gevonden.")
-        if not ICS_URL or not TOKEN:
-            return self._send(500, b"ICS_URL of TOKEN is niet ingesteld op Render.")
-        auth = self.headers.get("Authorization", "")
-        given = auth[7:].strip() if auth.lower().startswith("bearer ") else ""
-        if not hmac.compare_digest(given.encode(), TOKEN.encode()):
-            return self._send(401, b"Geen toegang.")
+        if not ICS_URL:
+            return self._send(500, b"ICS_URL is niet ingesteld op Render.")
         status, body = fetch_ics()
         if status == 200:
             return self._send(200, body, "text/calendar; charset=utf-8")
         return self._send(status, body)
 
     def log_message(self, fmt, *args):
-        # Alleen pad en status loggen, nooit kopteksten (daar staat de sleutel in).
+        # Alleen methode, pad en status; nooit de Outlook-link.
         sys.stderr.write("%s %s\n" % (self.command, fmt % args if args else fmt))
 
 
