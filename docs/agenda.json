@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-12T22:06:16+01:00",
+    "updated": "2026-11-14T12:39:53+01:00",
     "items": [
         {
             "start": "2026-10-10",
@@ -312,6 +312,26 @@
             "type": "groep8"
         },
         {
+            "start": "2027-03-23",
+            "end": "2027-03-23",
+            "start_time": "19:00",
+            "end_time": "21:00",
+            "title": "Eindconcert muziek havo 5",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2027-03-24",
+            "end": "2027-03-24",
+            "start_time": "19:00",
+            "end_time": "21:00",
+            "title": "Eindconcert muziek vwo 6",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
             "start": "2027-03-25",
             "end": "2027-03-25",
             "start_time": "",
@@ -350,6 +370,16 @@
             "location": "",
             "description": "",
             "type": "rooster"
+        },
+        {
+            "start": "2027-04-09",
+            "end": "2027-04-09",
+            "start_time": "15:00",
+            "end_time": "19:00",
+            "title": "Eindexpositie Kunst havo 5 en vwo 6 in de middag en avond",
+            "location": "",
+            "description": "",
+            "type": "agenda"
         },
         {
             "start": "2027-04-12",
