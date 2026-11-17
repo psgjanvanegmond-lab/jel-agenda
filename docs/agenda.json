@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-14T12:39:53+01:00",
+    "updated": "2026-11-17T18:03:11+01:00",
     "items": [
         {
             "start": "2026-10-10",
@@ -64,16 +64,6 @@
         {
             "start": "2026-11-26",
             "end": "2026-11-26",
-            "start_time": "",
-            "end_time": "",
-            "title": "Studie- en beroepenavond",
-            "location": "",
-            "description": "",
-            "type": "gesprek"
-        },
-        {
-            "start": "2026-11-26",
-            "end": "2026-11-26",
             "start_time": "19:00",
             "end_time": "21:30",
             "title": "Studie en beroepenavond",
@@ -122,14 +112,24 @@
             "type": "groep8"
         },
         {
-            "start": "2026-12-15",
-            "end": "2026-12-15",
-            "start_time": "12:30",
-            "end_time": "15:00",
-            "title": "Eindejaarslunch onderbouw",
+            "start": "2026-12-14",
+            "end": "2026-12-14",
+            "start_time": "",
+            "end_time": "",
+            "title": "30 min rooster",
             "location": "",
             "description": "",
-            "type": "activiteit"
+            "type": "rooster"
+        },
+        {
+            "start": "2026-12-15",
+            "end": "2026-12-15",
+            "start_time": "",
+            "end_time": "",
+            "title": "OB kerstontbijt daarna vrij, BB 30 min rooster",
+            "location": "",
+            "description": "",
+            "type": "rooster"
         },
         {
             "start": "2026-12-15",
