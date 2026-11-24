@@ -2,12 +2,18 @@
 
 Toont de agenda van het Jan van Egmond Lyceum op de website, rechtstreeks uit de Outlook-agenda **"JEL agenda website"**.
 
-- Een automatische taak (GitHub Actions) haalt de agenda op uit Outlook: **automatisch om 12:00 en 18:00**,
-  en **handmatig** wanneer je wilt (zie hieronder).
-  Microsoft blokkeert verkeer van GitHub naar Outlook; daarom loopt het ophalen via een klein
-  tussenstation op **Render** (map `proxy/`). Dat geeft alleen een opgeschoonde agenda door
-  (zonder privé- en geannuleerde afspraken en zonder deelnemers); de Outlook-link blijft geheim op Render.
-- Het resultaat (`docs/agenda.json`) wordt gepubliceerd op GitHub Pages.
+```
+Outlook-agenda  →  Power Automate  →  GitHub (Actions + Pages)  →  website (WordPress)
+```
+
+- **Power Automate** (stroom **"JEL agenda naar website"**, account `janvanegmond@psg.nl`) leest
+  **automatisch om 12:00 en 18:00** de Outlook-agenda, laat privé-afspraken weg en stuurt de afspraken
+  als seintje `agenda` (repository dispatch) naar deze opslagplaats.
+- **GitHub Actions** zet de afspraken om (`build/outlook-naar-ics.py` en `build/build.php`) naar
+  `docs/agenda.json` en publiceert die op GitHub Pages.
+- Microsoft blokkeert het ophalen van de agenda vanaf GitHub en (sinds november 2026) ook vanaf Render.
+  Daarom komt de agenda nu vanuit Microsoft zelf. Het oude tussenstation op Render (map `proxy/`) wordt
+  niet meer gebruikt.
 - De website laat de agenda zien met een klein stukje code: **1 maand tegelijk met pijltjes, tijden, datumbereik en icoontjes**.
 - Werkt GitHub of Outlook een keer niet, dan blijft de laatst bekende agenda staan.
 
@@ -25,27 +31,39 @@ Locatie en notitie uit Outlook worden ook getoond. Het icoon wordt gekozen op ba
 
 ## Handmatig bijwerken (na een wijziging in Outlook)
 
-1. Ga naar <https://github.com/psgjanvanegmond-lab/jel-agenda/actions/workflows/agenda.yml>
-2. Klik rechts op **Run workflow** en daarna op de groene knop **Run workflow**.
-3. Na 1 à 2 minuten staat er een groen vinkje. Binnen ongeveer 10 minuten staat de wijziging op de website
+1. Ga naar <https://make.powerautomate.com> (inloggen met `janvanegmond@psg.nl`) → **Mijn stromen**.
+2. Open **JEL agenda naar website** en klik op **Uitvoeren**.
+3. Na ongeveer een minuut staat er bij GitHub *Actions* een groen vinkje en staat de wijziging op de website
    (eventueel de pagina verversen met Cmd+Shift+R / Ctrl+F5).
 
-## Eenmalig instellen
+Let op: **Run workflow** in GitHub haalt géén nieuwe agenda op; het zet alleen de bestaande opnieuw online.
 
-**Render (tussenstation)**
+## Als het niet werkt
 
-1. Render → *New* → *Blueprint* → kies de opslagplaats `jel-agenda`.
-2. Vul bij `ICS_URL` de ICS-link uit Outlook in en klik *Apply*.
-3. Krijgt de service een ander adres dan `https://jel-agenda-proxy.onrender.com`, zet dat adres dan
-   op GitHub als *variable* `JEL_PROXY_URL` (*Settings → Secrets and variables → Actions → Variables*).
+1. **Power Automate** → de stroom → *Uitvoeringsgeschiedenis*. Mislukt een stap, dan is meestal een
+   koppeling verlopen: open de stroom en log bij die stap opnieuw in (Outlook met `janvanegmond@psg.nl`,
+   GitHub met het account `psgjanvanegmond-lab`).
+2. **GitHub** → *Actions* → *Agenda bijwerken*: de fout staat bij de mislukte run. GitHub stuurt dan ook een e-mail.
 
-**GitHub**
+Gaat er iets mis, dan blijft de laatst bekende agenda gewoon op de website staan.
 
-1. **Pages aanzetten:** *Settings → Pages → Build and deployment → Source:* **GitHub Actions**
-2. **Eerste keer draaien:** *Actions → Agenda bijwerken → Run workflow*
-3. Controleer: <https://psgjanvanegmond-lab.github.io/jel-agenda/>
+## Eenmalig instellen (al gedaan, voor als het opnieuw moet)
 
-Gaat er iets mis, dan stuurt GitHub een e-mail en staat de fout bij *Actions*.
+**Power Automate:** geplande cloudstroom "JEL agenda naar website", elke dag om 12 en 18 uur
+(tijdzone Amsterdam), met deze stappen:
+
+1. **Agendaweergave van gebeurtenissen ophalen (V3)** (Office 365 Outlook): agenda "JEL agenda website",
+   begintijd `addDays(utcNow(), -35)`, eindtijd `addDays(utcNow(), 400)`.
+2. **Matrix filteren**: van `body('Agendaweergave_van_gebeurtenissen_ophalen_(V3)')?['value']`, filter
+   `@not(contains(createArray('private','confidential'), toLower(string(item()?['sensitivity']))))`.
+3. **Selecteren**: van `body('Matrix_filteren')`, toewijzing (tekstmodus) als expressie:
+   `setProperty(...)` met de velden `s`, `b`, `e`, `h`, `l`, `n`, `c`, `p`, `m`
+   (zie de uitleg bovenin `build/outlook-naar-ics.py`).
+4. **Een gebeurtenis voor het verzenden van een opslagplaats maken** (GitHub): eigenaar `psgjanvanegmond-lab`,
+   opslagplaats `jel-agenda`, gebeurtenisnaam `agenda`, nettolading `setProperty(json('{}'),'events',body('Selecteren'))`.
+
+**GitHub Pages:** *Settings → Pages → Build and deployment → Source:* **GitHub Actions**.
+Controleer: <https://psgjanvanegmond-lab.github.io/jel-agenda/>
 
 ## Insluiten op de website (WordPress)
 
@@ -67,10 +85,17 @@ Opties op de eerste regel:
 
 ## Technisch
 
-- `build/class-jel-ics.php`: leest de ICS van Outlook (tijdzones, hele dagen, herhalingen, uitzonderingen) en voegt aaneengesloten dagen samen.
-- `build/build.php`: maakt `docs/agenda.json`. Stopt met een fout als de link geen agenda is, of als Outlook alleen "bezet/vrij" doorgeeft.
+- `build/outlook-naar-ics.py`: zet de afspraken van Power Automate om naar een ICS-agenda (HTML-notities
+  naar tekst, UTC naar Nederlandse tijd, herhalingen weer als reeks).
+- `build/class-jel-ics.php`: leest de ICS (tijdzones, hele dagen, herhalingen, uitzonderingen) en voegt aaneengesloten dagen samen.
+- `build/build.php`: maakt `docs/agenda.json`. Stopt met een fout als het geen agenda is, of als Outlook alleen "bezet/vrij" doorgeeft.
 - `docs/agenda.js` en `docs/agenda.css`: de weergave op de website.
-- `.github/workflows/agenda.yml`: de automatische taak.
-- `proxy/server.py` en `render.yaml`: het tussenstation op Render (alleen Python-standaardbibliotheek).
+- `.github/workflows/agenda.yml`: de taak die start op het seintje `agenda` van Power Automate.
+- `proxy/server.py` en `render.yaml`: het oude tussenstation op Render, **niet meer in gebruik**.
 
-Lokaal testen: `php build/build.php agenda.ics docs/agenda.json`
+Lokaal testen:
+
+```bash
+python3 build/outlook-naar-ics.py afspraken.json agenda.ics
+php build/build.php agenda.ics docs/agenda.json
+```
