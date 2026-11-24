@@ -6,15 +6,17 @@ Gebruik:  python3 build/outlook-naar-ics.py <afspraken.json> <agenda.ics>
 Power Automate leest de Outlook-agenda "JEL agenda website" (Get calendar view of events V3)
 en stuurt per afspraak deze velden mee (korte namen, zodat het bericht klein blijft):
   s = onderwerp, b = begin, e = einde, h = hele dag (true/false), l = locatie,
-  n = notitie (bodyPreview), c = categorieën, p = vertrouwelijkheid (sensitivity),
-  x = geannuleerd (isCancelled), m = id van de reeks (seriesMasterId)
+  n = notitie (body, HTML), c = categorieën, p = vertrouwelijkheid (sensitivity),
+  x = geannuleerd, m = reeks (leeg bij een losse afspraak, anders het onderwerp)
 
 Tijden zonder tijdzone zijn UTC (zo levert Power Automate ze). Afspraken uit dezelfde reeks
 op opeenvolgende dagen worden weer als herhaling geschreven, zodat build.php ze net als
 vroeger samenvoegt tot één regel (bijv. POP-gesprekken ma t/m do).
 """
 
+import html
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -44,6 +46,18 @@ def hele_dag(waarde):
     if len(tekst) >= 19 and tekst[11:19] == "00:00:00" and "+" not in tekst[19:] and "Z" not in tekst:
         return datetime.fromisoformat(tekst[:10]).date()
     return lees_tijd(tekst).date()
+
+
+def html_naar_tekst(waarde):
+    """De notitie komt uit Outlook als HTML; alleen de tekst blijft over."""
+    tekst = str(waarde or "")
+    if "<" not in tekst:
+        return tekst.strip()
+    tekst = re.sub(r"(?is)<(style|script|head)\b.*?</\1>", " ", tekst)
+    tekst = re.sub(r"(?i)<br\s*/?>|</(p|div|li|tr|h\d)>", "\n", tekst)
+    tekst = html.unescape(re.sub(r"<[^>]+>", " ", tekst)).replace("\xa0", " ")
+    regels = [re.sub(r"[ \t]+", " ", r).strip() for r in tekst.split("\n")]
+    return "\n".join(r for r in regels if r).strip()
 
 
 def ics_tekst(waarde):
@@ -86,7 +100,7 @@ def maak_ics(afspraken):
         item = {
             "titel": a.get("s", ""),
             "locatie": a.get("l") or "",
-            "notitie": a.get("n") or "",
+            "notitie": html_naar_tekst(a.get("n")),
             "categorieen": [c for c in (a.get("c") or []) if c],
             "prive": str(a.get("p") or "").lower() in ("private", "confidential"),
             "geannuleerd": bool(a.get("x")),
