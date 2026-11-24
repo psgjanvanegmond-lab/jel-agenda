@@ -1,14 +1,18 @@
 name: Agenda bijwerken
 
-# Haalt de Outlook-agenda op en zet die op GitHub Pages:
-# - automatisch om 12:00 en 18:00 Nederlandse tijd;
-# - handmatig met de knop "Run workflow" (Actions → Agenda bijwerken).
+# De agenda komt van Power Automate (stroom "JEL agenda naar website" in Microsoft 365):
+# die leest om 12:00 en 18:00 de Outlook-agenda "JEL agenda website" en stuurt de afspraken
+# hierheen als seintje "agenda" (repository dispatch). Deze taak maakt er agenda.json van
+# en zet die op GitHub Pages.
 #
-# GitHub rekent in UTC-tijd. Daarom staan er vier tijden ingepland (voor winter- en zomertijd);
-# de eerste taak hieronder laat alleen de runs om 12 en 18 uur Nederlandse tijd doorgaan.
+# Direct bijwerken na een wijziging in Outlook: start de stroom in Power Automate (Uitvoeren).
+# "Run workflow" hieronder zet alleen de bestaande agenda opnieuw online.
+#
+# (Vroeger haalde deze taak de ICS-link zelf op via het tussenstation op Render, map proxy/.
+#  Microsoft weigert sinds november 2026 ook dat verkeer; daarom nu via Power Automate.)
 on:
-  schedule:
-    - cron: "5 10,11,16,17 * * *"
+  repository_dispatch:
+    types: [agenda]
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -23,24 +27,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  tijdcontrole:
-    runs-on: ubuntu-latest
-    outputs:
-      doorgaan: ${{ steps.check.outputs.doorgaan }}
-    steps:
-      - id: check
-        run: |
-          uur=$(TZ=Europe/Amsterdam date +%H)
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "$uur" = "12" ] || [ "$uur" = "18" ]; then
-            echo "doorgaan=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Het is nu $uur uur in Nederland; deze geplande run wordt overgeslagen."
-            echo "doorgaan=false" >> "$GITHUB_OUTPUT"
-          fi
-
   bijwerken:
-    needs: tijdcontrole
-    if: needs.tijdcontrole.outputs.doorgaan == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -49,18 +36,17 @@ jobs:
       - name: Code ophalen
         uses: actions/checkout@v5
 
-      # Microsoft blokkeert verkeer van GitHub naar Outlook. Daarom wordt de agenda opgehaald
-      # via het tussenstation op Render (map proxy/). Dat kan na een rustige periode tot
-      # een minuut nodig hebben om wakker te worden; vandaar de ruime wachttijd.
-      - name: Agenda ophalen (via Render)
+      # De afspraken gaan via een bestand, nooit naar het logboek (dit is een openbare opslagplaats).
+      - name: Afspraken van Power Automate omzetten
+        if: github.event_name == 'repository_dispatch'
         env:
-          PROXY_URL: ${{ vars.JEL_PROXY_URL || 'https://jel-agenda-proxy.onrender.com' }}
+          AFSPRAKEN: ${{ toJSON(github.event.client_payload) }}
         run: |
-          curl -fsS -o /dev/null --max-time 120 --retry 2 --retry-delay 20 --retry-all-errors "${PROXY_URL%/}/health" || true
-          curl -fsSL --connect-timeout 30 --max-time 150 --retry 3 --retry-delay 20 --retry-all-errors \
-            "${PROXY_URL%/}/agenda.ics" -o "$RUNNER_TEMP/agenda.ics"
+          printf '%s' "$AFSPRAKEN" > "$RUNNER_TEMP/afspraken.json"
+          python3 build/outlook-naar-ics.py "$RUNNER_TEMP/afspraken.json" "$RUNNER_TEMP/agenda.ics"
 
       - name: agenda.json maken
+        if: github.event_name == 'repository_dispatch'
         run: php build/build.php "$RUNNER_TEMP/agenda.ics" docs/agenda.json
 
       - name: Opslaan als de agenda veranderd is
@@ -68,11 +54,6 @@ jobs:
         run: |
           git config user.name "agenda-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # GitHub zet automatische taken uit na 60 dagen zonder wijzigingen; daarom af en toe een teken van leven.
-          last=$(git log -1 --format=%ct)
-          if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
-            date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/.laatst-gecontroleerd
-          fi
           git add docs
           if git diff --cached --quiet; then
             echo "Geen wijzigingen."
@@ -84,21 +65,21 @@ jobs:
           fi
 
       - name: Pages voorbereiden
-        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'repository_dispatch'
         uses: actions/configure-pages@v5
 
       - name: Bestanden klaarzetten
-        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'repository_dispatch'
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs
 
       # GitHub heeft soms een paar seconden nodig voordat het geüploade bestand vindbaar is.
       - name: Even wachten
-        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'repository_dispatch'
         run: sleep 15
 
       - name: Publiceren op GitHub Pages
         id: deploy
-        if: steps.save.outputs.changed == 'true' || github.event_name != 'schedule'
+        if: steps.save.outputs.changed == 'true' || github.event_name != 'repository_dispatch'
         uses: actions/deploy-pages@v4
