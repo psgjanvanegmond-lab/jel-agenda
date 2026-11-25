@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-24T18:12:56+01:00",
+    "updated": "2026-11-25T12:00:23+01:00",
     "items": [
         {
             "start": "2026-10-30",
@@ -276,7 +276,7 @@
             "end": "2027-02-16",
             "start_time": "",
             "end_time": "",
-            "title": "SE2-week / afsluitweek",
+            "title": "SE2-week / afsluitweek 2",
             "location": "",
             "description": "",
             "type": "toets"
@@ -526,10 +526,10 @@
             "end": "2027-06-01",
             "start_time": "",
             "end_time": "",
-            "title": "Centraal examen tijdvak 1",
+            "title": "CE 1e tijdvak van 14 mei t/m 1 juni",
             "location": "",
             "description": "",
-            "type": "toets"
+            "type": "agenda"
         },
         {
             "start": "2027-05-17",
@@ -546,7 +546,7 @@
             "end": "2027-06-11",
             "start_time": "",
             "end_time": "",
-            "title": "Afsluitweek",
+            "title": "Afsluitweek 3",
             "location": "",
             "description": "",
             "type": "activiteit"
@@ -572,11 +572,21 @@
             "type": "uitslag"
         },
         {
+            "start": "2027-06-17",
+            "end": "2027-06-17",
+            "start_time": "",
+            "end_time": "",
+            "title": "10.00 Deadline doorgeven herkansing CE",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
             "start": "2027-06-21",
             "end": "2027-06-21",
             "start_time": "",
             "end_time": "",
-            "title": "Kennismakingsmiddag nieuwe brugklassen vanaf 13.30",
+            "title": "Kennismakingsmiddag nieuwe brugklassers vanaf 13.30",
             "location": "",
             "description": "",
             "type": "groep8"
@@ -586,7 +596,27 @@
             "end": "2027-06-29",
             "start_time": "",
             "end_time": "",
-            "title": "Centraal examen tijdvak 2",
+            "title": "CE 2e tijdvak van 22 t/m 29 juni",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2027-06-23",
+            "end": "2027-06-23",
+            "start_time": "",
+            "end_time": "",
+            "title": "10.00 Inschrijfdeadline TW3 Afname 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-06-25",
+            "end": "2027-06-25",
+            "start_time": "",
+            "end_time": "",
+            "title": "TWs Afname 2",
             "location": "",
             "description": "",
             "type": "toets"
