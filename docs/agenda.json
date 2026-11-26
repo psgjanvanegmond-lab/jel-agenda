@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-26T12:00:15+01:00",
+    "updated": "2026-11-26T18:00:14+01:00",
     "items": [
         {
             "start": "2026-10-30",
@@ -86,7 +86,7 @@
             "end": "2026-12-03",
             "start_time": "",
             "end_time": "",
-            "title": "10.00 inschrijfdeadline SE1 afname 2",
+            "title": "10.00 inschrijfdeadline afname 2 SE's",
             "location": "",
             "description": "",
             "type": "toets"
@@ -116,7 +116,7 @@
             "end": "2026-12-09",
             "start_time": "",
             "end_time": "",
-            "title": "SE1 afname 2",
+            "title": "TW1 afname 2 SE's",
             "location": "",
             "description": "",
             "type": "toets"
@@ -252,6 +252,16 @@
             "type": "groep8"
         },
         {
+            "start": "2027-01-28",
+            "end": "2027-01-28",
+            "start_time": "",
+            "end_time": "",
+            "title": "JEL Open stage 17.00 tot 21.00",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
             "start": "2027-01-29",
             "end": "2027-01-30",
             "start_time": "",
@@ -286,10 +296,10 @@
             "end": "2027-02-16",
             "start_time": "",
             "end_time": "",
-            "title": "SE2-week / afsluitweek 2",
+            "title": "Afsluitweek 2 8-2 tot en met di 16-2",
             "location": "",
             "description": "",
-            "type": "toets"
+            "type": "activiteit"
         },
         {
             "start": "2027-02-20",
@@ -352,16 +362,6 @@
             "type": "gesprek"
         },
         {
-            "start": "2027-03-05",
-            "end": "2027-03-05",
-            "start_time": "",
-            "end_time": "",
-            "title": "10.00 cijferdeadline SE2 afname 1",
-            "location": "",
-            "description": "",
-            "type": "toets"
-        },
-        {
             "start": "2027-03-08",
             "end": "2027-03-08",
             "start_time": "",
@@ -376,7 +376,7 @@
             "end": "2027-03-12",
             "start_time": "",
             "end_time": "",
-            "title": "SE2 afname 2",
+            "title": "TW2 afname 2 SE's wo 10-3 tot en met vr 12-3",
             "location": "",
             "description": "",
             "type": "toets"
@@ -606,7 +606,7 @@
             "end": "2027-06-11",
             "start_time": "",
             "end_time": "",
-            "title": "Afsluitweek 3",
+            "title": "Afsluitweek 3 ma 7-6 tot en met vr 11-6",
             "location": "",
             "description": "",
             "type": "activiteit"
@@ -666,7 +666,7 @@
             "end": "2027-06-23",
             "start_time": "",
             "end_time": "",
-            "title": "10.00 Inschrijfdeadline TW3 Afname 2",
+            "title": "10.00 Inschrijfdeadline TW3 afname 2 SE's",
             "location": "",
             "description": "",
             "type": "toets"
@@ -676,7 +676,7 @@
             "end": "2027-06-25",
             "start_time": "",
             "end_time": "",
-            "title": "TWs Afname 2",
+            "title": "TW3 Afname 2 SE's",
             "location": "",
             "description": "",
             "type": "toets"
