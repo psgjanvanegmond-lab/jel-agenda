@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-25T12:00:23+01:00",
+    "updated": "2026-11-26T12:00:15+01:00",
     "items": [
         {
             "start": "2026-10-30",
@@ -80,6 +80,16 @@
             "location": "",
             "description": "",
             "type": "gesprek"
+        },
+        {
+            "start": "2026-12-03",
+            "end": "2026-12-03",
+            "start_time": "",
+            "end_time": "",
+            "title": "10.00 inschrijfdeadline SE1 afname 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
         },
         {
             "start": "2026-12-03",
@@ -342,6 +352,26 @@
             "type": "gesprek"
         },
         {
+            "start": "2027-03-05",
+            "end": "2027-03-05",
+            "start_time": "",
+            "end_time": "",
+            "title": "10.00 cijferdeadline SE2 afname 1",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
+            "start": "2027-03-08",
+            "end": "2027-03-08",
+            "start_time": "",
+            "end_time": "",
+            "title": "10.00 Inschrijfdeadline SE2 afname 2",
+            "location": "",
+            "description": "",
+            "type": "toets"
+        },
+        {
             "start": "2027-03-10",
             "end": "2027-03-12",
             "start_time": "",
@@ -360,6 +390,16 @@
             "location": "",
             "description": "",
             "type": "groep8"
+        },
+        {
+            "start": "2027-03-17",
+            "end": "2027-03-17",
+            "start_time": "",
+            "end_time": "",
+            "title": "30 minutenrooster",
+            "location": "",
+            "description": "",
+            "type": "rooster"
         },
         {
             "start": "2027-03-23",
@@ -444,6 +484,16 @@
         {
             "start": "2027-04-09",
             "end": "2027-04-09",
+            "start_time": "",
+            "end_time": "",
+            "title": "H4 en V5 PWS verslag inleveren",
+            "location": "",
+            "description": "",
+            "type": "agenda"
+        },
+        {
+            "start": "2027-04-09",
+            "end": "2027-04-09",
             "start_time": "15:00",
             "end_time": "19:00",
             "title": "Eindexpositie Kunst havo 5 en vwo 6 in de middag en avond",
@@ -520,6 +570,16 @@
             "location": "",
             "description": "",
             "type": "vakantie"
+        },
+        {
+            "start": "2027-05-11",
+            "end": "2027-05-11",
+            "start_time": "",
+            "end_time": "",
+            "title": "H4 en V5 PWS congres",
+            "location": "",
+            "description": "",
+            "type": "agenda"
         },
         {
             "start": "2027-05-14",
